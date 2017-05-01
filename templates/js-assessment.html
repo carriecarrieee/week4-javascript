@@ -205,7 +205,7 @@
 
 <fieldset>
   <input type="button" id="play-guessing-game" value="Play!">
-  <form action="do-not-go-here" id="guessing-game-form">
+  <form action="" id="guessing-game-form">
     <input id="number-guessed" class="enable-game" name="number-guessed" type="number" placeholder="Guess" min="0" max="100" disabled>
     <!-- hey! go read MDN about the "number" input type. Cool, huh? -->
     <input type="submit" id="try-this-number" class="enable-game" value="Guess" disabled>
@@ -238,16 +238,23 @@
   $('#play-guessing-game').on('click', changeButtons);
 
   function startGame(evt) {
+    evt.preventDefault();
 
     var randomNum = (Math.round(Math.random() * 100) + 1);
     var user_guess = parseInt($('#number-guessed').val());
-
+    console.log(user_guess, randomNum);
     if (user_guess === randomNum) {
-      $('#number-guessing-msg').html("Congratulations! You got it!");
-      changeButtons();
+      $(":submit").html("Congratulations! You got it!");
+      changeButtons(); // Disable Guess button and enable Play button.
     }
-
+    else if (user_guess < randomNum) {
+      $(":submit").html("Too low! Try again.");
+    }
+    else if (user_guess > randomNum) {
+      $(":submit").html("Too high! Try again.");
+    }
   }
+
   $('#try-this-number').on('submit', startGame);
 </script>
 
