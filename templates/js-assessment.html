@@ -286,7 +286,7 @@
 
 
 <fieldset>
-  <form id="t-rex-form">
+  <form id="t-rex-form" method="POST">
     You're about to launch a T-Rex attack on
     <input id="t-rex-target" type="text" name="attack-target" placeholder="choose victim or location" required>
     <br>
@@ -322,7 +322,14 @@
   }
 
   // put your code here
+  function launchAttack(evt) {
+    evt.preventDefault();
 
+    var targetInput = {"target": $("#t-rex-target").val() };
+
+    $.post('/t-rex-attack.json', targetInput, showTRexResults);
+  }
+  $("#t-rex-form").on("submit", launchAttack);
 </script>
 
 <div class="hint">
